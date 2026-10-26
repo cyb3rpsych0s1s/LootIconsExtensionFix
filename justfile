@@ -56,9 +56,6 @@ lldb TO=game_dir: dev
   @just copy '{{ join(red4ext_bin_dir, "debug", plugin_name + ".pdb") }}' '{{ join(TO, red4ext_deploy_dir, plugin_name + ".pdb") }}'
   @just now
 
-checksum IN OUT:
-  Get-FileHash -Path "{{IN}}" -Algorithm SHA256 | Select-Object -ExpandProperty Hash > "{{OUT}}"
-
 # 🤖 package in CI
 ci TO: (setup (TO / red4ext_deploy_dir)) (setup (TO / redscript_deploy_dir)) (build 'release' TO) (reload TO)
 

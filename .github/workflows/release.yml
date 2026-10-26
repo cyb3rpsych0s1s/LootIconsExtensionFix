@@ -43,19 +43,11 @@ jobs:
           filename: LootIconsExtension-windows-latest-${{ github.ref_name }}.zip
           directory: LootIconsExtension-windows-latest-${{ github.ref_name }}
           path: .
-      - name: Generate zip checksum
-        run: Get-FileHash -Path "LootIconsExtension-windows-latest-${{ github.ref_name }}\LootIconsExtension-windows-latest-${{ github.ref_name }}.zip" -Algorithm SHA256 | Select-Object -ExpandProperty Hash > "checksum.txt"
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
           name: windows-latest-${{ github.ref_name }}-artifact
           path: LootIconsExtension-windows-latest-${{ github.ref_name }}/LootIconsExtension-windows-latest-${{ github.ref_name }}.zip
-          if-no-files-found: error
-      - name: Upload artifact checksum
-        uses: actions/upload-artifact@v7
-        with:
-          name: windows-latest-${{ github.ref_name }}-artifact-checksum
-          path: checksum.txt
           if-no-files-found: error
   release:
     if: ${{ startsWith(github.event.ref, 'refs/tags') }}
@@ -70,7 +62,7 @@ jobs:
       - name: Create release ${{ github.ref_name }}
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "release/LootIconsExtension-windows-latest-${{ github.ref_name }}.zip,release/checksum.txt"
+          artifacts: "release/LootIconsExtension-windows-latest-${{ github.ref_name }}.zip"
           draft: ${{ env.IS_DRAFT }}
           prerelease: ${{ env.IS_PRERELEASE }}
           token: ${{ secrets.GITHUB_TOKEN }}
