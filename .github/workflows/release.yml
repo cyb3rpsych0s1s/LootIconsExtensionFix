@@ -18,9 +18,9 @@ env:
 
 jobs:
   bundle:
-    runs-on: windows-2019
+    runs-on: windows-2025
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: true
       - name: Prepare Rust toolchain
@@ -52,18 +52,18 @@ jobs:
           path: LootIconsExtension-windows-latest-${{ github.ref_name }}/LootIconsExtension-windows-latest-${{ github.ref_name }}.zip
           if-no-files-found: error
       - name: Upload artifact checksum
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: windows-latest-${{ github.ref_name }}-artifact-checksum
           path: checksum.txt
           if-no-files-found: error
   release:
     if: ${{ startsWith(github.event.ref, 'refs/tags') }}
-    runs-on: windows-2019
+    runs-on: windows-2025
     needs: bundle
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: release
           merge-multiple: true
