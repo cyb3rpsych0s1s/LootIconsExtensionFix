@@ -2,8 +2,8 @@
 name = "loot_icons_extension_fix"
 authors = ["Roms1383", "Demon9ne"]
 version = "0.2.0"
-edition = "2021"
-rust-version = "1.82.0"
+edition = "2024"
+rust-version = "1.99.1"
 publish = false
 
 [lib]
