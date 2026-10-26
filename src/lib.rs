@@ -13,7 +13,7 @@ use red4ext_rs::{
 
 mod hook;
 
-struct LootIconsExtensionFix;
+pub struct LootIconsExtensionFix;
 
 impl Plugin for LootIconsExtensionFix {
     const NAME: &'static U16CStr = wcstr!("LootIconsExtensionFix");
