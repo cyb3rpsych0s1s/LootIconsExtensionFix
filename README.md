@@ -1,6 +1,6 @@
 # LootIconsExtensionFix
 
-![Cyberpunk 2077 version compatibility](https://img.shields.io/badge/Cyberpunk_2077-patch_2.13-yellow) [![Nexus](https://img.shields.io/badge/Nexus-LootIconsExtension-orange)](https://www.nexusmods.com/cyberpunk2077/mods/16386)
+![Cyberpunk 2077 version compatibility](https://img.shields.io/badge/Cyberpunk_2077-patch_2.5-yellow) [![Nexus](https://img.shields.io/badge/Nexus-LootIconsExtension-orange)](https://www.nexusmods.com/cyberpunk2077/mods/16386)
 
 Loot icons focused on expandedness and customization.
 
