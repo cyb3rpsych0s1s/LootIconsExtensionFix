@@ -1,10 +1,10 @@
-set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
+set shell := ["powershell.exe", "-NoLogo", "-Command"]
 set dotenv-load
 
 # default to steam default game dir
 DEFAULT_GAME_DIR := join("C:\\", "Program Files (x86)", "Steam", "steamapps", "common", "Cyberpunk 2077")
 
-game_dir            := env_var_or_default("GAME_DIR", DEFAULT_GAME_DIR)
+game_dir            := env("GAME_DIR", DEFAULT_GAME_DIR)
 plugin_name         := 'loot_icons_extension_fix'
 script_name         := 'LootIconsExtensionFix'
 
@@ -41,8 +41,8 @@ now:
   @Write-Host "$(Get-Date) $_"
 
 # 📦 build Rust RED4Ext plugin
-build PROFILE='debug' TO=game_dir: (setup join(TO, red4ext_deploy_dir))
-  @'{{ if PROFILE == "release" { `cargo build --release` } else { `cargo build` } }}'
+build PROFILE='debug' TO=game_dir: (setup (TO / red4ext_deploy_dir))
+  @cargo build {{ if PROFILE == "release" { "--release" } else { "" } }}
   @just copy '{{ join(red4ext_bin_dir, PROFILE, plugin_name + ".dll") }}' '{{ join(TO, red4ext_deploy_dir, plugin_name + ".dll") }}'
   @just now
 
@@ -60,7 +60,7 @@ checksum IN OUT:
   Get-FileHash -Path "{{IN}}" -Algorithm SHA256 | Select-Object -ExpandProperty Hash > "{{OUT}}"
 
 # 🤖 package in CI
-ci TO: (setup join(TO, red4ext_deploy_dir)) (setup join(TO, redscript_deploy_dir)) (build 'release' TO) (reload TO)
+ci TO: (setup (TO / red4ext_deploy_dir)) (setup (TO / redscript_deploy_dir)) (build 'release' TO) (reload TO)
 
 # 🔥 clear cache
 clear:
@@ -73,7 +73,7 @@ clear:
     }
 
 # 🔄 overwrite Redscript file(s)
-reload TO=game_dir: (setup join(TO, redscript_deploy_dir))
+reload TO=game_dir: (setup (TO / redscript_deploy_dir))
   @just copy-recurse '{{ join(redscript_repo_dir, "*") }}' '{{ join(TO, redscript_deploy_dir) }}'
   @just now
 
